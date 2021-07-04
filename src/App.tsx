@@ -1,6 +1,12 @@
+import { RecoilRoot } from "recoil";
+import TodoList from "./components/TodoList";
+
+
 const App = () => {
   return (
-    <div>dummy</div>
+    <RecoilRoot>
+      <TodoList />
+    </RecoilRoot>
   );
 };
 
