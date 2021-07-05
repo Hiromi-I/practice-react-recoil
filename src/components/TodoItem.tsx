@@ -1,4 +1,4 @@
-import { VFC } from "react";
+import { ChangeEvent, VFC } from "react";
 import { useRecoilState } from "recoil";
 
 import { TodoType } from "../types/todo";
@@ -9,23 +9,24 @@ type Props = {
 };
 
 const TodoItem: VFC<Props> = (props) => {
-  const { id, title, isComplete } = props.item;
+  const item = props.item
   const [todoList, setTodoList] = useRecoilState(todoListState);
-  const index = todoList.findIndex(todo => todo === props.item)
-  
-  const onChange = () => {
-    const newList = [
-      ...todoList.slice(0, index),
-      {...props.item, isComplete: !isComplete},
-      ...todoList.slice(index + 1)
-    ];
+  const index = todoList.findIndex(todo => todo === item)
+
+  const updateItem = (newItem: TodoType) => {
+    const newList = [...todoList.slice(0, index), newItem, ...todoList.slice(index + 1)];
     setTodoList(newList);
+  }
+  
+  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const newItem: TodoType = { ...item, isComplete: event.target.checked };
+    updateItem(newItem);
   };
 
   return (
-    <li key={id}>
-      <input type="checkbox" checked={isComplete} onChange={onChange} />
-      {title}
+    <li key={item.id}>
+      <input type="checkbox" checked={item.isComplete} onChange={onChangeHandler} />
+      {item.title}
     </li>
   )
 };
