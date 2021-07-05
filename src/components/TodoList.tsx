@@ -1,5 +1,6 @@
 import { useRecoilValue } from "recoil";
 import { todoListState } from "../datas/todo";
+import TodoItem from "./TodoItem";
 
 const TodoList = () => {
   const todoList = useRecoilValue(todoListState);
@@ -7,7 +8,7 @@ const TodoList = () => {
     return (
       <ul>
         {todoList.map(todo => (
-          <li key={todo.id}>{todo.title}</li>
+          <TodoItem key={todo.id} item={todo} />
         ))}
       </ul>
     )
