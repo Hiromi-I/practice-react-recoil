@@ -1,9 +1,9 @@
-import { useRecoilValue } from "recoil";
-import { todoListState } from "../datas/todo";
 import TodoItem from "./TodoItem";
+import { useTodo } from "../hooks/useTodo";
 
 const TodoList = () => {
-  const todoList = useRecoilValue(todoListState);
+  const { todoList } = useTodo();
+
   if (todoList.length > 0) {
     return (
       <ul>
