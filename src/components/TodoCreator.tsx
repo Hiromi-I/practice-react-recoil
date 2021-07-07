@@ -1,24 +1,22 @@
 import { ChangeEvent, useState } from "react";
-import { useRecoilState } from "recoil";
-
-import { todoListState } from "../datas/todo";
+import { useTodo } from "../hooks/useTodo";
 
 const TodoCreator = () => {
   const [title, setTitle] = useState("");
-  const [todoList, setTodoList] = useRecoilState(todoListState);
+  const { createTodo } = useTodo();
 
-  const createTodo = () => {
-    setTodoList([...todoList, {id: todoList.length + 1, title, isComplete: false}])
+  const onClickHandler = () => {
+    createTodo(title);
     setTitle("");
   };
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
-  }
+  };
 
   return (
     <div>
       <input type="text" value={title} onChange={onChangeHandler} />
-      <button onClick={createTodo}>作成</button>
+      <button onClick={onClickHandler}>作成</button>
     </div>
   )
 };
