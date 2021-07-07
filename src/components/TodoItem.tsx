@@ -1,8 +1,7 @@
 import { ChangeEvent, VFC } from "react";
-import { useRecoilState } from "recoil";
 
 import { TodoType } from "../types/todo";
-import { todoListState } from "../datas/todo";
+import { useTodo } from "../hooks/useTodo";
 
 type Props = {
   item: TodoType;
@@ -10,17 +9,9 @@ type Props = {
 
 const TodoItem: VFC<Props> = (props) => {
   const item = props.item
-  const [todoList, setTodoList] = useRecoilState(todoListState);
-  const index = todoList.findIndex(todo => todo === item)
-
-  const updateItem = (newItem: TodoType) => {
-    const newList = [...todoList.slice(0, index), newItem, ...todoList.slice(index + 1)];
-    setTodoList(newList);
-  }
-  
+  const { updateTodo } = useTodo();
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const newItem: TodoType = { ...item, isComplete: event.target.checked };
-    updateItem(newItem);
+    updateTodo({ ...item, isComplete: event.target.checked });
   };
 
   return (
