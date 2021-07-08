@@ -9,15 +9,19 @@ type Props = {
 
 const TodoItem: VFC<Props> = (props) => {
   const item = props.item
-  const { updateTodo } = useTodo();
+  const { updateTodo, deleteTodo } = useTodo();
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     updateTodo({ ...item, isComplete: event.target.checked });
+  };
+  const onClickHandler = () => {
+    deleteTodo(item);
   };
 
   return (
     <li key={item.id}>
       <input type="checkbox" checked={item.isComplete} onChange={onChangeHandler} />
       {item.title}
+      <button onClick={onClickHandler}>削除</button>
     </li>
   )
 };

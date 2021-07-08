@@ -14,11 +14,17 @@ export const useTodo = () => {
     const index = _findTodo(todo);
     const newList = [...todoList.slice(0, index), todo, ...todoList.slice(index + 1)];
     setTodoList(newList);
-  }
+  };
+  const deleteTodo = (todo: TodoType) => {
+    const index = _findTodo(todo)
+    const newList = [...todoList.slice(0, index), ...todoList.slice(index + 1)];
+    setTodoList(newList);
+  };
 
   return {
     todoList,
     createTodo,
-    updateTodo
+    updateTodo,
+    deleteTodo,
   };
 };
