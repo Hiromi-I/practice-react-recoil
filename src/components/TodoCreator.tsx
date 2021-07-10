@@ -15,8 +15,8 @@ const TodoCreator = () => {
 
   return (
     <div>
-      <input type="text" value={title} onChange={onChangeHandler} />
-      <button onClick={onClickHandler}>作成</button>
+      <input type="text" value={title} onChange={onChangeHandler} aria-label="new Todo" />
+      <button onClick={onClickHandler} aria-label="create new Todo">作成</button>
     </div>
   )
 };
