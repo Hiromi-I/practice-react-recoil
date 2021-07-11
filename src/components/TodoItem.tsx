@@ -21,7 +21,7 @@ const TodoItem: VFC<Props> = (props) => {
     <li key={item.id}>
       <input type="checkbox" checked={item.isComplete} onChange={onChangeHandler} />
       {item.title}
-      <button onClick={onClickHandler}>削除</button>
+      <button onClick={onClickHandler} aria-label="delete Todo">削除</button>
     </li>
   )
 };
