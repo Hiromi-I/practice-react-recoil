@@ -1,11 +1,15 @@
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 
-import { todoListState } from "../datas/todo";
+import { todoListState, todoListFilterState, filterdTodoListState } from "../datas/todo";
 import { TodoType } from "../types/todo";
 
 export const useTodo = () => {
   const [todoList, setTodoList] = useRecoilState(todoListState);
+  const setFilterState = useSetRecoilState(todoListFilterState);
+  const filterdTodoList= useRecoilValue(filterdTodoListState);
+
   const _findTodo = (todo: TodoType) => todoList.findIndex(item => item.id === todo.id);
+
   const createTodo = (title: string) => {
     const newTodo: TodoType = { id: todoList.length, title, isComplete: false };
     setTodoList([...todoList, newTodo]);
@@ -20,11 +24,15 @@ export const useTodo = () => {
     const newList = [...todoList.slice(0, index), ...todoList.slice(index + 1)];
     setTodoList(newList);
   };
+  const changeFilterState = (state: string) => {
+    setFilterState(state);
+  }
 
   return {
-    todoList,
+    filterdTodoList,
     createTodo,
     updateTodo,
     deleteTodo,
+    changeFilterState,
   };
 };
