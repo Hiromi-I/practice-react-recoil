@@ -1,13 +1,14 @@
+
 import TodoItem from "./TodoItem";
 import { useTodo } from "../hooks/useTodo";
 
 const TodoList = () => {
-  const { todoList } = useTodo();
+  const { filterdTodoList } = useTodo();
 
-  if (todoList.length > 0) {
+  if (filterdTodoList.length > 0) {
     return (
       <ul>
-        {todoList.map(todo => (
+        {filterdTodoList.map(todo => (
           <TodoItem key={todo.id} item={todo} />
         ))}
       </ul>
