@@ -9,7 +9,7 @@ const SelectFilterState = () => {
   };
 
   return (
-    <select onChange={onChangeHandler}>
+    <select onChange={onChangeHandler} aria-label="select filter state">
       <option value="All">All</option>
       <option value="Completed">Completed</option>
       <option value="Uncompleted">Uncompleted</option>

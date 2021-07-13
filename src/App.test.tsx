@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, within } from '@testing-library/react';
 import App from './App';
 
 describe("<App />", () => {
@@ -80,6 +80,49 @@ describe("<App />", () => {
 
       const targetItem = result.queryByText("Dummy Todo"); 
       expect(targetItem).not.toBeInTheDocument();
+    });
+  });
+
+  describe("when filtering", () => {
+    const setup = () => {
+      const result = render(<App />);
+      const input = screen.getByLabelText("new Todo");
+      const createButton = screen.getByLabelText("create new Todo");
+
+      const createTodo = (title: string) => {
+        fireEvent.change(input, { target: { value: title } });
+        fireEvent.click(createButton);
+      };
+
+      createTodo("Dummy Todo 01");
+      createTodo("Dummy Todo 02");
+      createTodo("Dummy Todo 03");
+
+      const todos = screen.getAllByRole("listitem");
+      const checkbox2 = within(todos[1]).getByRole("checkbox");
+      fireEvent.click(checkbox2);
+
+      const select =  screen.getByLabelText("select filter state");
+      const list = screen.getByRole("list")
+      return {
+        result,
+        select,
+        list
+      }
+    };
+
+    it("render one item in Completed condition", () => {
+      const { select, list } = setup();
+      fireEvent.change(select, { target: { value: "Completed" } });
+
+      expect(list.children.length).toBe(1);
+    });
+
+    it("render two item in Uncompleted condition", () => {
+      const { select, list } = setup();
+      fireEvent.change(select, { target: { value: "Uncompleted" } });
+
+      expect(list.children.length).toBe(2);
     });
   });
 
